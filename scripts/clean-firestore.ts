@@ -26,7 +26,7 @@ const db = getFirestore(app, process.env.VITE_FIREBASE_DATABASE_ID || '(default)
 
 // ── S'authentifier en tant que Super Admin ────────────────────────────
 async function loginAsAdmin() {
-  await signInWithEmailAndPassword(auth, 'admin@logitrack.tn', 'LogiTrack2024!');
+  await signInWithEmailAndPassword(auth, 'admin@amenatawsil.com', 'AmenaTawsil2024!');
   console.log('🔐 Connecté en tant que Super Admin');
 }
 
@@ -40,21 +40,21 @@ async function clearCollection(name: string) {
 
 // ── Données propres ───────────────────────────────────────────────────
 const CLEAN_USERS = [
-  { email: 'admin@logitrack.tn',       password: 'LogiTrack2024!', data: { name: 'Ahmed Ben Salem',  role: 'Super Admin',      status: 'Active', lastLogin: '' } },
-  { email: 'moderator@logitrack.tn',   password: 'LogiTrack2024!', data: { name: 'Sonia Mansour',    role: 'Agency Moderator', status: 'Active', lastLogin: '', agency: 'Agence Tunis Centre' } },
-  { email: 'shipper@logitrack.tn',     password: 'LogiTrack2024!', data: { name: 'Mohamed Ali',      role: 'Shipper',          status: 'Active', lastLogin: '', companyName: 'Fashion Store' } },
-  { email: 'courier@logitrack.tn',     password: 'LogiTrack2024!', data: { name: 'Yassine Jendoubi', role: 'Courier',          status: 'Active', lastLogin: '', vehicle: 'Moto', zone: 'Tunis', balance: 125.5, performanceScore: 4.9, acceptanceRate: 98 } },
+  { email: 'admin@amenatawsil.com',       password: 'AmenaTawsil2024!', data: { name: 'Ahmed Ben Salem',  role: 'Super Admin',      status: 'Active', lastLogin: '' } },
+  { email: 'moderator@amenatawsil.com',   password: 'AmenaTawsil2024!', data: { name: 'Sonia Mansour',    role: 'Agency Moderator', status: 'Active', lastLogin: '', agency: 'Agence Tunis Centre' } },
+  { email: 'shipper@amenatawsil.com',     password: 'AmenaTawsil2024!', data: { name: 'Mohamed Ali',      role: 'Shipper',          status: 'Active', lastLogin: '', companyName: 'Fashion Store' } },
+  { email: 'courier@amenatawsil.com',     password: 'AmenaTawsil2024!', data: { name: 'Yassine Jendoubi', role: 'Courier',          status: 'Active', lastLogin: '', vehicle: 'Moto', zone: 'Tunis', balance: 125.5, performanceScore: 4.9, acceptanceRate: 98 } },
 ];
 
 const CLEAN_AGENCIES = [
-  { name: 'Agence Tunis Centre', location: 'Tunis',  manager: 'Sonia Mansour', phone: '+216 71 123 456', email: 'tunis@logitrac.tn',  status: 'Active',   packages: 0 },
-  { name: 'Agence Sfax Sud',     location: 'Sfax',   manager: '',              phone: '+216 74 123 456', email: 'sfax@logitrac.tn',   status: 'Active',   packages: 0 },
-  { name: 'Agence Sousse',       location: 'Sousse', manager: '',              phone: '+216 73 123 456', email: 'sousse@logitrac.tn', status: 'Inactive', packages: 0 },
+  { name: 'Agence Tunis Centre', location: 'Tunis',  manager: 'Sonia Mansour', phone: '+216 71 123 456', email: 'tunis@amenatawsil.com',  status: 'Active',   packages: 0 },
+  { name: 'Agence Sfax Sud',     location: 'Sfax',   manager: '',              phone: '+216 74 123 456', email: 'sfax@amenatawsil.com',   status: 'Active',   packages: 0 },
+  { name: 'Agence Sousse',       location: 'Sousse', manager: '',              phone: '+216 73 123 456', email: 'sousse@amenatawsil.com', status: 'Inactive', packages: 0 },
 ];
 
 const CLEAN_SETTINGS = {
-  companyName: 'LogiTrack Tunisie',
-  contactEmail: 'contact@logitrac.tn',
+  companyName: 'AMENA TAWSIL',
+  contactEmail: 'contact@amenatawsil.com',
   primaryPhone: '+216 71 000 000',
   defaultCurrency: 'TND (Dinar Tunisien)',
   maintenanceMode: false,

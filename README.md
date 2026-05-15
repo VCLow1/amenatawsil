@@ -1,4 +1,4 @@
-# LogiTrack Tunisie
+# AMENA TAWSIL
 
 Plateforme de gestion logistique multi-agences avec Firebase, React et Gemini AI.
 
@@ -68,7 +68,7 @@ Cela crée le compte admin par défaut :
 
 | Rôle        | Email                  | Mot de passe      |
 |-------------|------------------------|-------------------|
-| Super Admin | admin@logitrack.tn     | LogiTrack2024!    |
+| Super Admin | admin@amenatawsil.com  | AmenaTawsil2024!  |
 
 ---
 

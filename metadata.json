@@ -1,5 +1,5 @@
 {
-  "name": "LogiTrack Tunisia",
+  "name": "AMENA TAWSIL",
   "description": "A comprehensive logistics and delivery management platform for Tunisia, featuring dashboards for admins, moderators, shippers, and couriers.",
   "requestFramePermissions": ["geolocation"]
 }

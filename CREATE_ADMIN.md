@@ -155,4 +155,4 @@ Vous avez maintenant un compte Super Admin et pouvez :
 - ✅ Générer des rapports
 - ✅ Configurer les paramètres
 
-**Profitez de votre application LogiTrack Tunisia !** 🚀
+**Profitez de votre application AMENA TAWSIL !** 🚀

@@ -22,18 +22,18 @@ const today = new Date().toISOString().split('T')[0];
 const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 
 const SEED_USERS = [
-  { email: 'admin@logitrack.tn', password: 'LogiTrack2024!', name: 'Admin', role: 'Super Admin', status: 'Active' },
+  { email: 'admin@amenatawsil.com', password: 'AmenaTawsil2024!', name: 'Admin', role: 'Super Admin', status: 'Active' },
 ];
 
 const SEED_AGENCIES = [
-  { name: 'Agence Tunis Centre', location: 'Tunis',  manager: 'Sonia Mansour', phone: '+216 71 123 456', email: 'tunis@logitrac.tn',  status: 'Active',   packages: 0 },
-  { name: 'Agence Sfax Sud',     location: 'Sfax',   manager: '',              phone: '+216 74 123 456', email: 'sfax@logitrac.tn',   status: 'Active',   packages: 0 },
-  { name: 'Agence Sousse',       location: 'Sousse', manager: '',              phone: '+216 73 123 456', email: 'sousse@logitrac.tn', status: 'Inactive', packages: 0 },
+  { name: 'Agence Tunis Centre', location: 'Tunis',  manager: 'Sonia Mansour', phone: '+216 71 123 456', email: 'tunis@amenatawsil.com',  status: 'Active',   packages: 0 },
+  { name: 'Agence Sfax Sud',     location: 'Sfax',   manager: '',              phone: '+216 74 123 456', email: 'sfax@amenatawsil.com',   status: 'Active',   packages: 0 },
+  { name: 'Agence Sousse',       location: 'Sousse', manager: '',              phone: '+216 73 123 456', email: 'sousse@amenatawsil.com', status: 'Inactive', packages: 0 },
 ];
 
 const SEED_SETTINGS = {
-  companyName: 'LogiTrack Tunisie',
-  contactEmail: 'contact@logitrac.tn',
+  companyName: 'AMENA TAWSIL',
+  contactEmail: 'contact@amenatawsil.com',
   primaryPhone: '+216 71 000 000',
   defaultCurrency: 'TND (Dinar Tunisien)',
   maintenanceMode: false,
@@ -102,7 +102,7 @@ async function seed() {
   }
 
   await addDoc(collection(db, 'packages'), {
-    trackingId: 'LT-782910',
+    trackingId: 'AT-782910',
     shipper: 'Fashion Store',
     recipientName: 'Amine Abdellaoui',
     recipientPhone: '98765432',
@@ -127,7 +127,7 @@ async function seed() {
   });
 
   await addDoc(collection(db, 'packages'), {
-    trackingId: 'LT-782911',
+    trackingId: 'AT-782911',
     shipper: 'Tech Hub',
     recipientName: 'Sarah Dridi',
     recipientPhone: '22334455',
@@ -148,7 +148,7 @@ async function seed() {
   });
 
   await addDoc(collection(db, 'packages'), {
-    trackingId: 'LT-782912',
+    trackingId: 'AT-782912',
     shipper: 'Fashion Store',
     recipientName: 'Omar Feki',
     recipientPhone: '55667788',

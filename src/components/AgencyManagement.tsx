@@ -375,7 +375,7 @@ export const AgencyManagement = () => {
                     <input required type="email" value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
                       className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                      placeholder="agence@logitrack.tn" />
+                      placeholder="agence@amenatawsil.com" />
                   </div>
                 </div>
                 <div>
@@ -406,7 +406,7 @@ export const AgencyManagement = () => {
                       <input required type="email" value={formData.moderatorEmail}
                         onChange={e => setFormData({...formData, moderatorEmail: e.target.value})}
                         className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                        placeholder="moderateur@logitrack.tn" />
+                        placeholder="moderateur@amenatawsil.com" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1">Téléphone</label>

@@ -144,7 +144,7 @@ export const BarcodeScanner = () => {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="LT-XXXXXX — Scannez ou tapez + Entrée"
+                  placeholder="AT-XXXXXX — Scannez ou tapez + Entrée"
                   className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border-2 border-blue-200 rounded-2xl text-sm font-mono font-bold focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
                   autoComplete="off"
                   spellCheck={false}

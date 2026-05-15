@@ -142,4 +142,4 @@ Une fois connecté, vous pourrez :
 - ✅ Générer des rapports
 - ✅ Accéder à tous les paramètres
 
-**Profitez de votre application LogiTrack Tunisia !** 🚀
+**Profitez de votre application AMENA TAWSIL !** 🚀

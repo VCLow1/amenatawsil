@@ -64,7 +64,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 const DEFAULT_SETTINGS: Settings = {
   companyName: 'AMENA TAWSIL',
-  contactEmail: 'contact@logitrac.tn',
+  contactEmail: 'contact@amenatawsil.com',
   primaryPhone: '+216 71 000 000',
   defaultCurrency: 'TND (Dinar Tunisien)',
   maintenanceMode: false,
@@ -75,7 +75,7 @@ const DEFAULT_SETTINGS: Settings = {
   notifDailyReport: false,
 };
 
-const generateTrackingId = () => `LT-${Math.floor(100000 + Math.random() * 900000)}`;
+const generateTrackingId = () => `AT-${Math.floor(100000 + Math.random() * 900000)}`;
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -277,7 +277,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     try {
       // Tentative de création normale
-      const credential = await createUserWithEmailAndPassword(secondaryAuth, userData.email, password || 'LogiTrack2024!');
+      const credential = await createUserWithEmailAndPassword(secondaryAuth, userData.email, password || 'AmenaTawsil2024!');
       uid = credential.user.uid;
       await secondaryAuth.signOut();
     } catch (err: any) {
@@ -285,11 +285,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Email existe dans Auth (compte supprimé de Firestore mais pas d'Auth)
         // On tente avec le nouveau mot de passe fourni
         try {
-          const credential = await signInWithEmailAndPassword(secondaryAuth, userData.email, password || 'LogiTrack2024!');
+          const credential = await signInWithEmailAndPassword(secondaryAuth, userData.email, password || 'AmenaTawsil2024!');
           uid = credential.user.uid;
           // Mettre à jour le mot de passe si différent
           const { updatePassword } = await import('firebase/auth');
-          await updatePassword(credential.user, password || 'LogiTrack2024!');
+          await updatePassword(credential.user, password || 'AmenaTawsil2024!');
           await secondaryAuth.signOut();
         } catch (loginErr: any) {
           if (loginErr.code === 'auth/invalid-credential' || loginErr.code === 'auth/wrong-password') {
