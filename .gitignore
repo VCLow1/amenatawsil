@@ -9,3 +9,6 @@ coverage/
 
 # Firebase config avec clés sensibles
 firebase-applet-config.json
+
+.vercel
+.env*.local
