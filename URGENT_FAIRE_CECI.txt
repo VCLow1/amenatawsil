@@ -1,0 +1,89 @@
+═══════════════════════════════════════════════════════════════════════
+                    🚨 URGENT - FAIRE CECI MAINTENANT
+═══════════════════════════════════════════════════════════════════════
+
+Votre application fonctionne MAIS vous ne pouvez pas vous connecter car :
+
+❌ Le profil utilisateur n'existe pas dans Firestore
+
+✅ SOLUTION (1 MINUTE) :
+
+═══════════════════════════════════════════════════════════════════════
+
+ÉTAPE 1 : Ouvrir Firebase Console
+───────────────────────────────────────────────────────────────────────
+
+Cliquez sur ce lien :
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore/data
+
+
+ÉTAPE 2 : Activer Firestore (si pas déjà fait)
+───────────────────────────────────────────────────────────────────────
+
+Si vous voyez "Create database" :
+1. Cliquez sur "Create database"
+2. Sélectionnez "Start in production mode"
+3. Région : europe-west1
+4. Cliquez sur "Enable"
+5. Attendez 30 secondes
+
+
+ÉTAPE 3 : Créer le profil admin
+───────────────────────────────────────────────────────────────────────
+
+1. Cliquez sur "Start collection"
+
+2. Collection ID : users
+   Cliquez sur "Next"
+
+3. Document ID : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+4. Ajoutez ces 5 champs (un par un) :
+
+   ┌─────────────┬────────┬──────────────────────────────────┐
+   │ Nom         │ Type   │ Valeur                           │
+   ├─────────────┼────────┼──────────────────────────────────┤
+   │ email       │ string │ administrateur@amenatawsil.com   │
+   │ name        │ string │ Administrateur Principal         │
+   │ role        │ string │ Super Admin                      │
+   │ status      │ string │ Active                           │
+   │ lastLogin   │ string │ 2026-05-15                       │
+   └─────────────┴────────┴──────────────────────────────────┘
+
+5. Cliquez sur "Save"
+
+
+ÉTAPE 4 : Se connecter
+───────────────────────────────────────────────────────────────────────
+
+1. Retournez sur : http://localhost:3000/
+   (ou rechargez la page)
+
+2. Connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+3. ✅ Vous êtes connecté en tant que Super Admin !
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ IMPORTANT
+═══════════════════════════════════════════════════════════════════════
+
+Sans créer ce profil dans Firestore, vous NE POURREZ PAS vous connecter !
+
+Les erreurs que vous voyez dans la console sont normales AVANT la création
+du profil. Elles disparaîtront après.
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 RÉCAPITULATIF
+═══════════════════════════════════════════════════════════════════════
+
+✅ Application fonctionne : http://localhost:3000/
+✅ Utilisateur créé : administrateur@amenatawsil.com
+❌ Profil Firestore manquant : À CRÉER MAINTENANT
+
+Lien direct Firestore :
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore/data
+
+═══════════════════════════════════════════════════════════════════════

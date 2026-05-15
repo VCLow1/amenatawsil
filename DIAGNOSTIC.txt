@@ -1,0 +1,125 @@
+═══════════════════════════════════════════════════════════════════════
+                    🔍 DIAGNOSTIC - SITE NE S'OUVRE PAS
+═══════════════════════════════════════════════════════════════════════
+
+Le site https://amenatawsil.com répond (code 200 OK) mais ne s'affiche pas.
+
+Voici les causes possibles et solutions :
+
+═══════════════════════════════════════════════════════════════════════
+                    1️⃣ VÉRIFIER LE NAVIGATEUR
+═══════════════════════════════════════════════════════════════════════
+
+✅ Essayez ces actions :
+
+1. Videz le cache du navigateur :
+   - Chrome : Ctrl + Shift + Delete
+   - Firefox : Ctrl + Shift + Delete
+   - Cochez "Images et fichiers en cache"
+   - Cliquez sur "Effacer les données"
+
+2. Ouvrez en navigation privée :
+   - Chrome : Ctrl + Shift + N
+   - Firefox : Ctrl + Shift + P
+   - Allez sur https://amenatawsil.com
+
+3. Essayez un autre navigateur
+
+4. Désactivez les extensions (bloqueurs de pub, etc.)
+
+
+═══════════════════════════════════════════════════════════════════════
+                    2️⃣ VÉRIFIER LA CONSOLE DU NAVIGATEUR
+═══════════════════════════════════════════════════════════════════════
+
+1. Allez sur https://amenatawsil.com
+
+2. Appuyez sur F12 pour ouvrir les outils de développement
+
+3. Allez dans l'onglet "Console"
+
+4. Regardez s'il y a des erreurs en rouge
+
+5. Notez les erreurs et dites-moi ce que vous voyez
+
+
+═══════════════════════════════════════════════════════════════════════
+                    3️⃣ VÉRIFIER LE DÉPLOIEMENT VERCEL
+═══════════════════════════════════════════════════════════════════════
+
+1. Allez sur Vercel Dashboard :
+   👉 https://vercel.com/vc-lows-projects/amenatawsil
+
+2. Vérifiez que le dernier déploiement est "Ready"
+
+3. Cliquez sur le déploiement
+
+4. Regardez les logs pour voir s'il y a des erreurs
+
+5. Vérifiez que toutes les variables d'environnement sont définies :
+   - VITE_FIREBASE_API_KEY
+   - VITE_FIREBASE_AUTH_DOMAIN
+   - VITE_FIREBASE_PROJECT_ID
+   - VITE_FIREBASE_STORAGE_BUCKET
+   - VITE_FIREBASE_MESSAGING_SENDER_ID
+   - VITE_FIREBASE_APP_ID
+   - VITE_FIREBASE_DATABASE_ID
+
+
+═══════════════════════════════════════════════════════════════════════
+                    4️⃣ REDÉPLOYER LE SITE
+═══════════════════════════════════════════════════════════════════════
+
+Si rien ne fonctionne, redéployez :
+
+1. Ouvrez un terminal dans le dossier du projet
+
+2. Exécutez :
+   git add .
+   git commit -m "Fix deployment"
+   git push
+
+3. Attendez 1-2 minutes que Vercel redéploie
+
+4. Rechargez https://amenatawsil.com
+
+
+═══════════════════════════════════════════════════════════════════════
+                    5️⃣ TESTER EN LOCAL
+═══════════════════════════════════════════════════════════════════════
+
+Pour vérifier que l'application fonctionne :
+
+1. Ouvrez un terminal dans le dossier du projet
+
+2. Exécutez :
+   npm run dev
+
+3. Ouvrez http://localhost:3000 dans votre navigateur
+
+4. Si ça fonctionne en local mais pas sur Vercel, le problème vient
+   des variables d'environnement Vercel
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ❓ QUE VOYEZ-VOUS EXACTEMENT ?
+═══════════════════════════════════════════════════════════════════════
+
+Dites-moi ce que vous voyez quand vous allez sur https://amenatawsil.com :
+
+□ Page blanche
+□ Message d'erreur (lequel ?)
+□ Le site charge indéfiniment
+□ Erreur de connexion
+□ Autre (précisez)
+
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 IDENTIFIANTS (QUAND LE SITE FONCTIONNERA)
+═══════════════════════════════════════════════════════════════════════
+
+🌐 URL      : https://amenatawsil.com
+📧 Email    : administrateur@amenatawsil.com
+🔑 Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════

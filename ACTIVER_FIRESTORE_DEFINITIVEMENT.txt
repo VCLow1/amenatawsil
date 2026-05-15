@@ -1,0 +1,125 @@
+═══════════════════════════════════════════════════════════════════════
+                    🚨 FIRESTORE N'EST PAS ACTIVÉ !
+═══════════════════════════════════════════════════════════════════════
+
+L'erreur "client is offline" signifie que Firestore n'est PAS activé
+ou que la base de données n'existe pas.
+
+═══════════════════════════════════════════════════════════════════════
+                    ✅ ACTIVER FIRESTORE MAINTENANT
+═══════════════════════════════════════════════════════════════════════
+
+ÉTAPE 1 : Aller sur la page Firestore
+───────────────────────────────────────────────────────────────────────
+
+Cliquez sur ce lien :
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+
+ÉTAPE 2 : Vérifier l'état
+───────────────────────────────────────────────────────────────────────
+
+Que voyez-vous ?
+
+Option A : Vous voyez un bouton "Create database"
+─────────────────────────────────────────────────────────────────────
+
+→ Firestore N'EST PAS activé !
+
+FAITES CECI :
+1. Cliquez sur "Create database"
+2. Sélectionnez "Start in production mode"
+3. Région : europe-west1
+4. Cliquez sur "Enable"
+5. Attendez 1-2 minutes
+
+
+Option B : Vous voyez des collections (agencies, users, etc.)
+─────────────────────────────────────────────────────────────────────
+
+→ Firestore EST activé !
+
+Le problème vient des règles de sécurité.
+
+FAITES CECI :
+1. Cliquez sur l'onglet "Règles" (Rules) en haut
+2. Remplacez TOUT le contenu par ceci :
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
+3. Cliquez sur "Publier" (Publish)
+4. Attendez 30 secondes
+
+
+ÉTAPE 3 : Créer le profil admin
+───────────────────────────────────────────────────────────────────────
+
+1. Retournez sur l'onglet "Données" (Data)
+
+2. Cliquez sur la collection "users"
+   (Si elle n'existe pas, cliquez sur "Commencer une collection")
+
+3. Cliquez sur "+ Ajouter un document"
+
+4. ID du document : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+5. Ajoutez ces champs :
+
+   email       (string) : administrateur@amenatawsil.com
+   name        (string) : Administrateur
+   role        (string) : Super Admin
+   status      (string) : Active
+   lastLogin   (string) : 2026-05-15
+   balance     (number) : 0
+   agency      (string) : (vide)
+
+6. Cliquez sur "Enregistrer"
+
+
+ÉTAPE 4 : Tester la connexion
+───────────────────────────────────────────────────────────────────────
+
+1. Ouvrez test-connexion.html dans votre navigateur
+
+2. Cliquez sur "Tester la connexion"
+
+3. Vous devriez voir : ✅ TOUT EST OK !
+
+4. Allez sur https://amenatawsil.com
+
+5. Connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ IMPORTANT
+═══════════════════════════════════════════════════════════════════════
+
+Sans activer Firestore, l'application NE PEUT PAS fonctionner !
+
+Firestore est la base de données qui stocke TOUTES les données :
+- Utilisateurs
+- Colis
+- Agences
+- Notifications
+- Transactions
+
+Vous DEVEZ l'activer pour que l'application fonctionne.
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 LIEN DIRECT
+═══════════════════════════════════════════════════════════════════════
+
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+Allez sur ce lien MAINTENANT et suivez les étapes ci-dessus.
+
+═══════════════════════════════════════════════════════════════════════

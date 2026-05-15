@@ -1,0 +1,124 @@
+═══════════════════════════════════════════════════════════════════════
+                    🚨 FIRESTORE N'EST PAS ACTIVÉ !
+═══════════════════════════════════════════════════════════════════════
+
+Les erreurs dans la console montrent :
+❌ "Database '(default)' not found"
+
+Cela signifie que Firestore n'est PAS activé sur votre projet Firebase.
+
+═══════════════════════════════════════════════════════════════════════
+                    ✅ ACTIVER FIRESTORE (1 MINUTE)
+═══════════════════════════════════════════════════════════════════════
+
+ÉTAPE 1 : Ouvrir la page Firestore
+───────────────────────────────────────────────────────────────────────
+
+Cliquez sur ce lien :
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+Vous devriez voir un bouton "Create database" ou "Créer une base de données"
+
+
+ÉTAPE 2 : Créer la base de données
+───────────────────────────────────────────────────────────────────────
+
+1. Cliquez sur "Create database" (ou "Créer une base de données")
+
+2. Une fenêtre s'ouvre avec 2 options :
+   ○ Test mode
+   ● Production mode  ← CHOISISSEZ CELLE-CI
+
+3. Cliquez sur "Next" (ou "Suivant")
+
+4. Choisissez la région : europe-west1 (Belgium)
+
+5. Cliquez sur "Enable" (ou "Activer")
+
+6. Attendez 30-60 secondes que la base soit créée
+
+
+ÉTAPE 3 : Créer la collection "users"
+───────────────────────────────────────────────────────────────────────
+
+Une fois la base créée, vous verrez une page vide avec un bouton
+"Start collection" (ou "Commencer une collection")
+
+1. Cliquez sur "Start collection"
+
+2. Collection ID : users
+
+3. Cliquez sur "Next"
+
+4. Document ID : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+5. Ajoutez ces 5 champs :
+
+   Champ 1 :
+   ─────────
+   Field name  : email
+   Field type  : string
+   Field value : administrateur@amenatawsil.com
+
+   Champ 2 :
+   ─────────
+   Field name  : name
+   Field type  : string
+   Field value : Administrateur
+
+   Champ 3 :
+   ─────────
+   Field name  : role
+   Field type  : string
+   Field value : Super Admin
+
+   Champ 4 :
+   ─────────
+   Field name  : status
+   Field type  : string
+   Field value : Active
+
+   Champ 5 :
+   ─────────
+   Field name  : lastLogin
+   Field type  : string
+   Field value : 2026-05-15
+
+6. Cliquez sur "Save"
+
+
+ÉTAPE 4 : Se connecter
+───────────────────────────────────────────────────────────────────────
+
+1. Rechargez la page : https://amenatawsil.com
+   (ou http://localhost:3000 si vous testez en local)
+
+2. Les erreurs dans la console devraient disparaître
+
+3. Connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+4. ✅ Vous êtes connecté !
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ TRÈS IMPORTANT
+═══════════════════════════════════════════════════════════════════════
+
+Sans activer Firestore, l'application NE PEUT PAS fonctionner !
+
+Toutes les données (utilisateurs, colis, agences, etc.) sont stockées
+dans Firestore. C'est la base de données de l'application.
+
+Vous DEVEZ activer Firestore pour que l'application fonctionne.
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 LIEN DIRECT
+═══════════════════════════════════════════════════════════════════════
+
+👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+Cliquez sur ce lien et suivez les étapes ci-dessus.
+
+═══════════════════════════════════════════════════════════════════════

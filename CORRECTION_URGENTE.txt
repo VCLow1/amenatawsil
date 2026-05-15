@@ -1,0 +1,87 @@
+═══════════════════════════════════════════════════════════════════════
+                    🔧 CORRECTION URGENTE
+═══════════════════════════════════════════════════════════════════════
+
+PROBLÈME TROUVÉ :
+─────────────────────────────────────────────────────────────────────
+
+✅ Utilisateur qui fonctionne : administrateur@amenatawsil.com
+❌ Profil Firestore créé pour : admin@amenatawsil.com
+
+Les emails ne correspondent pas !
+
+═══════════════════════════════════════════════════════════════════════
+                    ✅ SOLUTION (30 SECONDES)
+═══════════════════════════════════════════════════════════════════════
+
+OPTION 1 : Modifier le profil Firestore existant
+─────────────────────────────────────────────────────────────────────
+
+1. Allez sur Firestore :
+   👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore/data
+
+2. Cliquez sur la collection "users"
+
+3. Cliquez sur le document "tzo4E2tr6dQA3skcv8kO3Bek2K93"
+
+4. Modifiez le champ "email" :
+   Ancienne valeur : admin@amenatawsil.com
+   Nouvelle valeur : administrateur@amenatawsil.com
+
+5. Cliquez sur "Update"
+
+6. Allez sur https://amenatawsil.com et connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+
+OPTION 2 : Supprimer et recréer le profil
+─────────────────────────────────────────────────────────────────────
+
+1. Allez sur Firestore :
+   👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore/data
+
+2. Supprimez le document existant dans "users"
+
+3. Créez un nouveau document :
+   Document ID : tzo4E2tr6dQA3skcv8kO3Bek2K93
+   
+   Champs :
+   - email (string) : administrateur@amenatawsil.com
+   - name (string) : Administrateur
+   - role (string) : Super Admin
+   - status (string) : Active
+   - lastLogin (string) : 2026-05-15
+
+4. Cliquez sur "Save"
+
+5. Allez sur https://amenatawsil.com et connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 IDENTIFIANTS CORRECTS
+═══════════════════════════════════════════════════════════════════════
+
+🌐 URL      : https://amenatawsil.com
+📧 Email    : administrateur@amenatawsil.com
+🔑 Password : Amena2026!
+🆔 UID      : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ IMPORTANT
+═══════════════════════════════════════════════════════════════════════
+
+L'email dans Firestore DOIT correspondre EXACTEMENT à l'email dans
+Firebase Authentication !
+
+Actuellement :
+- Authentication : administrateur@amenatawsil.com ✅
+- Firestore      : admin@amenatawsil.com ❌
+
+Après correction :
+- Authentication : administrateur@amenatawsil.com ✅
+- Firestore      : administrateur@amenatawsil.com ✅
+
+═══════════════════════════════════════════════════════════════════════

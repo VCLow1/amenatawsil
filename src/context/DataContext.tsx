@@ -114,8 +114,37 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setCurrentUser(null);
           }
         } else {
-          await signOut(auth);
-          setCurrentUser(null);
+          // 🔧 FIX TEMPORAIRE : Créer automatiquement le profil admin s'il n'existe pas
+          if (firebaseUser.email === 'administrateur@amenatawsil.com') {
+            console.log('🔧 Création automatique du profil admin...');
+            try {
+              const adminProfile = {
+                email: firebaseUser.email,
+                name: 'Administrateur',
+                role: 'Super Admin',
+                status: 'Active',
+                lastLogin: new Date().toLocaleString('fr-FR'),
+                balance: 0,
+                agency: '',
+                performanceScore: 5.0,
+                acceptanceRate: 100,
+                availability: 'Available'
+              };
+              
+              await setDoc(doc(db, 'users', firebaseUser.uid), adminProfile);
+              console.log('✅ Profil admin créé automatiquement');
+              
+              // Définir l'utilisateur actuel
+              setCurrentUser({ id: firebaseUser.uid, ...adminProfile } as User);
+            } catch (createError) {
+              console.error('❌ Erreur création profil admin:', createError);
+              await signOut(auth);
+              setCurrentUser(null);
+            }
+          } else {
+            await signOut(auth);
+            setCurrentUser(null);
+          }
         }
       } else {
         setCurrentUser(null);

@@ -1,0 +1,84 @@
+═══════════════════════════════════════════════════════════════════════
+                    🔧 SOLUTION RAPIDE - RÉPARER FIRESTORE
+═══════════════════════════════════════════════════════════════════════
+
+❌ ERREUR : Database '(default)' not found
+
+✅ SOLUTION : Créer la base Firestore et le profil admin
+
+═══════════════════════════════════════════════════════════════════════
+
+ÉTAPE 1 : Activer Firestore (SI PAS DÉJÀ FAIT)
+───────────────────────────────────────────────────────────────────────
+
+1. Allez sur :
+   👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+2. Si vous voyez "Create database", cliquez dessus :
+   - Mode : "Start in production mode"
+   - Région : europe-west1
+   - Cliquez sur "Enable"
+
+3. Si la base existe déjà, passez à l'étape 2
+
+
+ÉTAPE 2 : Créer le profil Super Admin
+───────────────────────────────────────────────────────────────────────
+
+1. Sur la page Firestore, cliquez sur "Start collection"
+
+2. Collection ID : users
+
+3. Cliquez sur "Next"
+
+4. Document ID : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+5. Ajoutez ces 5 champs :
+
+   email       (string) : administrateur@amenatawsil.com
+   name        (string) : Administrateur Principal
+   role        (string) : Super Admin
+   status      (string) : Active
+   lastLogin   (string) : 2026-05-15
+
+6. Cliquez sur "Save"
+
+
+ÉTAPE 3 : Tester la connexion
+───────────────────────────────────────────────────────────────────────
+
+1. Allez sur : https://amenatawsil.com
+
+2. Connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+3. L'application devrait fonctionner ! 🎉
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ SI L'ERREUR PERSISTE
+═══════════════════════════════════════════════════════════════════════
+
+Si vous voyez toujours l'erreur "Database not found" :
+
+1. Vérifiez que vous êtes sur le bon projet Firebase :
+   👉 gen-lang-client-0208289492
+
+2. Vérifiez que Firestore est bien activé :
+   👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/firestore
+
+3. Attendez 1-2 minutes après l'activation (propagation)
+
+4. Rechargez la page : https://amenatawsil.com
+
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 VOS IDENTIFIANTS
+═══════════════════════════════════════════════════════════════════════
+
+URL      : https://amenatawsil.com
+Email    : administrateur@amenatawsil.com
+Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════

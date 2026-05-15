@@ -1,0 +1,84 @@
+═══════════════════════════════════════════════════════════════════════
+                    🔐 INSTRUCTIONS FINALES
+═══════════════════════════════════════════════════════════════════════
+
+Firestore est activé ✅
+Utilisateur existe ✅
+Il manque juste le profil dans Firestore ❌
+
+═══════════════════════════════════════════════════════════════════════
+                    📝 CRÉER LE PROFIL (30 SECONDES)
+═══════════════════════════════════════════════════════════════════════
+
+1. Vous êtes déjà sur la page Firestore
+   (je vois les collections dans votre capture d'écran)
+
+2. Cliquez sur la collection "users" dans la liste à gauche
+
+3. Cliquez sur "+ Ajouter un document" (bouton en haut)
+
+4. Dans "ID du document", entrez :
+   tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+5. Cliquez sur "Ajouter un champ" et ajoutez :
+
+   Champ 1 :
+   ─────────
+   Nom   : email
+   Type  : string
+   Valeur: administrateur@amenatawsil.com
+
+   Champ 2 :
+   ─────────
+   Nom   : name
+   Type  : string
+   Valeur: Administrateur
+
+   Champ 3 :
+   ─────────
+   Nom   : role
+   Type  : string
+   Valeur: Super Admin
+
+   Champ 4 :
+   ─────────
+   Nom   : status
+   Type  : string
+   Valeur: Active
+
+   Champ 5 :
+   ─────────
+   Nom   : lastLogin
+   Type  : string
+   Valeur: 2026-05-15
+
+6. Cliquez sur "Enregistrer"
+
+7. Allez sur https://amenatawsil.com
+
+8. Connectez-vous avec :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ SI VOUS VOYEZ DÉJÀ UN DOCUMENT
+═══════════════════════════════════════════════════════════════════════
+
+Si vous voyez déjà un document dans "users", cliquez dessus et vérifiez :
+
+✅ L'ID du document doit être : tzo4E2tr6dQA3skcv8kO3Bek2K93
+✅ Le champ "email" doit être : administrateur@amenatawsil.com
+✅ Le champ "role" doit être : Super Admin
+✅ Le champ "status" doit être : Active
+
+Si ce n'est pas le cas, modifiez les champs.
+
+═══════════════════════════════════════════════════════════════════════
+                    🔐 VOS IDENTIFIANTS
+═══════════════════════════════════════════════════════════════════════
+
+🌐 URL      : https://amenatawsil.com
+📧 Email    : administrateur@amenatawsil.com
+🔑 Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════

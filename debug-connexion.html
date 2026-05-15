@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Connexion</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .result { margin: 10px 0; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        button { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .step { background: #f8f9fa; padding: 15px; margin: 10px 0; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Connexion Admin</h1>
+    
+    <div class="step">
+        <strong>Test 1 :</strong> Vérifier l'authentification Firebase
+        <button onclick="testAuth()">Tester Auth</button>
+    </div>
+    
+    <div class="step">
+        <strong>Test 2 :</strong> Vérifier le profil Firestore
+        <button onclick="testFirestore()">Tester Firestore</button>
+    </div>
+    
+    <div class="step">
+        <strong>Test 3 :</strong> Créer le profil manquant
+        <button onclick="createProfile()">Créer Profil</button>
+    </div>
+    
+    <div class="step">
+        <strong>Test 4 :</strong> Test complet de connexion
+        <button onclick="testComplete()">Test Complet</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9iQIr23KSYZgsTqymaHe0bXqFdZeId3Q",
+            authDomain: "gen-lang-client-0208289492.firebaseapp.com",
+            projectId: "gen-lang-client-0208289492",
+            storageBucket: "gen-lang-client-0208289492.firebasestorage.app",
+            messagingSenderId: "616128322905",
+            appId: "1:616128322905:web:0c796ed0e1110a41bb8048"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        const email = 'administrateur@amenatawsil.com';
+        const password = 'Amena2026!';
+        const expectedUID = 'tzo4E2tr6dQA3skcv8kO3Bek2K93';
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            results.innerHTML += `<div class="result ${type}">${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        window.testAuth = async function() {
+            log('🔐 Test d\'authentification Firebase...', 'info');
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                log(`✅ Authentification réussie !
+UID: ${user.uid}
+Email: ${user.email}
+Email vérifié: ${user.emailVerified}`, 'success');
+
+                if (user.uid !== expectedUID) {
+                    log(`⚠️ ATTENTION: L'UID ne correspond pas !
+UID actuel: ${user.uid}
+UID attendu: ${expectedUID}
+
+Cela signifie que le document Firestore a le mauvais ID !`, 'warning');
+                }
+            } catch (error) {
+                log(`❌ Erreur d'authentification:
+Code: ${error.code}
+Message: ${error.message}`, 'error');
+            }
+        };
+
+        window.testFirestore = async function() {
+            log('📊 Test de connexion Firestore...', 'info');
+            try {
+                // Test de base : lire les collections
+                const usersRef = collection(db, 'users');
+                const snapshot = await getDocs(usersRef);
+                
+                log(`✅ Firestore accessible !
+Nombre d'utilisateurs: ${snapshot.size}`, 'success');
+
+                // Lister tous les utilisateurs
+                log('👥 Utilisateurs existants:', 'info');
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    log(`ID: ${doc.id}
+Email: ${data.email || 'N/A'}
+Nom: ${data.name || 'N/A'}
+Rôle: ${data.role || 'N/A'}
+Statut: ${data.status || 'N/A'}
+---`, 'info');
+                });
+
+                // Vérifier le document spécifique
+                const userDoc = await getDoc(doc(db, 'users', expectedUID));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    log(`✅ Document admin trouvé !
+${JSON.stringify(userData, null, 2)}`, 'success');
+                } else {
+                    log(`❌ Document admin manquant !
+ID recherché: ${expectedUID}`, 'error');
+                }
+
+            } catch (error) {
+                log(`❌ Erreur Firestore:
+Code: ${error.code}
+Message: ${error.message}`, 'error');
+            }
+        };
+
+        window.createProfile = async function() {
+            log('📝 Création du profil admin...', 'info');
+            try {
+                const profileData = {
+                    email: email,
+                    name: 'Administrateur',
+                    role: 'Super Admin',
+                    status: 'Active',
+                    lastLogin: '2026-05-15',
+                    balance: 0,
+                    agency: ''
+                };
+
+                await setDoc(doc(db, 'users', expectedUID), profileData);
+                log(`✅ Profil créé avec succès !
+ID: ${expectedUID}
+Données: ${JSON.stringify(profileData, null, 2)}`, 'success');
+
+            } catch (error) {
+                log(`❌ Erreur création profil:
+Code: ${error.code}
+Message: ${error.message}`, 'error');
+            }
+        };
+
+        window.testComplete = async function() {
+            log('🧪 Test complet de connexion...', 'info');
+            try {
+                // Étape 1: Auth
+                log('Étape 1/3: Authentification...', 'info');
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                log(`✅ Auth OK - UID: ${user.uid}`, 'success');
+
+                // Étape 2: Profil
+                log('Étape 2/3: Vérification profil...', 'info');
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                
+                if (!userDoc.exists()) {
+                    log(`❌ Profil manquant pour UID: ${user.uid}`, 'error');
+                    return;
+                }
+
+                const userData = userDoc.data();
+                log(`✅ Profil trouvé: ${JSON.stringify(userData, null, 2)}`, 'success');
+
+                // Étape 3: Validation
+                log('Étape 3/3: Validation des données...', 'info');
+                
+                const checks = [
+                    { field: 'email', expected: email, actual: userData.email },
+                    { field: 'role', expected: 'Super Admin', actual: userData.role },
+                    { field: 'status', expected: 'Active', actual: userData.status }
+                ];
+
+                let allValid = true;
+                checks.forEach(check => {
+                    if (check.actual === check.expected) {
+                        log(`✅ ${check.field}: OK (${check.actual})`, 'success');
+                    } else {
+                        log(`❌ ${check.field}: ERREUR
+Attendu: ${check.expected}
+Actuel: ${check.actual}`, 'error');
+                        allValid = false;
+                    }
+                });
+
+                if (allValid) {
+                    log(`🎉 TOUT EST PARFAIT !
+
+Vous pouvez maintenant vous connecter sur https://amenatawsil.com avec:
+📧 Email: ${email}
+🔑 Password: ${password}`, 'success');
+                } else {
+                    log('❌ Il y a des erreurs dans le profil. Utilisez "Créer Profil" pour corriger.', 'error');
+                }
+
+            } catch (error) {
+                log(`❌ Erreur test complet:
+Code: ${error.code}
+Message: ${error.message}`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

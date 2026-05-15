@@ -10,5 +10,22 @@ coverage/
 # Firebase config avec clés sensibles
 firebase-applet-config.json
 
+# Firebase Service Account Keys (NEVER commit these!)
+serviceAccountKey.json
+firebase-admin-key.json
+service-account.json
+*-firebase-adminsdk-*.json
+
+# Admin credentials (NEVER commit these!)
+admin-credentials.txt
+IDENTIFIANTS_SUPER_ADMIN.txt
+INSTRUCTIONS_ADMIN.txt
+LOGIN_ADMIN.txt
+LOGIN.txt
+FINAL_CREDENTIALS.txt
+CONNEXION_ADMIN.txt
+MOT_DE_PASSE.txt
+CREER_PROFIL.txt
+
 .vercel
 .env*.local

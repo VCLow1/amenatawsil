@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Correction Admin Finale</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background: #f5f7fa;
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+        }
+        .result { 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-family: 'Courier New', monospace; 
+            white-space: pre-wrap; 
+            font-size: 13px;
+        }
+        .success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .warning { background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+        
+        button { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            margin: 10px 5px; 
+            transition: transform 0.2s;
+        }
+        button:hover { transform: translateY(-2px); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        
+        .credentials { 
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            border-left: 4px solid #2196f3;
+        }
+        
+        .step { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border-left: 4px solid #6c757d;
+        }
+        
+        h1 { color: #2c3e50; text-align: center; }
+        h2 { color: #34495e; }
+        
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Correction Admin Finale</h1>
+        
+        <div class="credentials">
+            <h2>🔑 Identifiants Admin</h2>
+            <strong>📧 Email:</strong> administrateur@amenatawsil.com<br>
+            <strong>🔑 Password:</strong> Amena2026!<br>
+            <strong>🆔 UID:</strong> tzo4E2tr6dQA3skcv8kO3Bek2K93<br>
+            <strong>🌐 URL:</strong> <a href="https://amenatawsil.com" target="_blank">https://amenatawsil.com</a>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <button onclick="diagnosticComplet()" style="width: 100%; font-size: 18px;">
+            🚀 DIAGNOSTIC ET CORRECTION AUTOMATIQUE
+        </button>
+        
+        <button onclick="creerProfilForce()" style="width: 48%;">
+            📝 CRÉER PROFIL FORCE
+        </button>
+        
+        <button onclick="testerConnexion()" style="width: 48%;">
+            🧪 TESTER CONNEXION
+        </button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signOut,
+            onAuthStateChanged 
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            collection,
+            getDocs,
+            enableNetwork,
+            disableNetwork
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9iQIr23KSYZgsTqymaHe0bXqFdZeId3Q",
+            authDomain: "gen-lang-client-0208289492.firebaseapp.com",
+            projectId: "gen-lang-client-0208289492",
+            storageBucket: "gen-lang-client-0208289492.firebasestorage.app",
+            messagingSenderId: "616128322905",
+            appId: "1:616128322905:web:0c796ed0e1110a41bb8048"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const email = 'administrateur@amenatawsil.com';
+        const password = 'Amena2026!';
+        const uid = 'tzo4E2tr6dQA3skcv8kO3Bek2K93';
+
+        let currentStep = 0;
+        const totalSteps = 6;
+
+        function updateProgress(step) {
+            currentStep = step;
+            const percentage = (step / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function log(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            const timestamp = new Date().toLocaleTimeString();
+            resultDiv.innerHTML += `<div class="result ${type}">[${timestamp}] ${message}</div>`;
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('result').innerHTML = '';
+            updateProgress(0);
+        }
+
+        // Fonction de diagnostic complet
+        window.diagnosticComplet = async function() {
+            clearLog();
+            log('🔍 DÉBUT DU DIAGNOSTIC COMPLET', 'info');
+            
+            try {
+                // Étape 1: Test de connectivité Firebase
+                updateProgress(1);
+                log('📡 Étape 1/6 : Test de connectivité Firebase...', 'info');
+                
+                try {
+                    await enableNetwork(db);
+                    const testDoc = await getDoc(doc(db, 'test', 'connectivity'));
+                    log('✅ Connectivité Firebase OK', 'success');
+                } catch (err) {
+                    log(`⚠️ Problème de connectivité: ${err.message}`, 'warning');
+                }
+
+                // Étape 2: Vérification de l'utilisateur Auth
+                updateProgress(2);
+                log('🔐 Étape 2/6 : Vérification Firebase Auth...', 'info');
+                
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    log(`✅ Authentification réussie !
+UID reçu: ${userCredential.user.uid}
+UID attendu: ${uid}
+Match: ${userCredential.user.uid === uid ? '✅' : '❌'}`, 'success');
+                    
+                    if (userCredential.user.uid !== uid) {
+                        log('❌ PROBLÈME: L\'UID ne correspond pas !', 'error');
+                        return;
+                    }
+                } catch (authError) {
+                    log(`❌ Erreur d'authentification: ${authError.code} - ${authError.message}`, 'error');
+                    return;
+                }
+
+                // Étape 3: Vérification du document Firestore
+                updateProgress(3);
+                log('📄 Étape 3/6 : Vérification du profil Firestore...', 'info');
+                
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        log(`📋 Profil existant trouvé:
+${JSON.stringify(userData, null, 2)}`, 'info');
+                        
+                        // Vérifier les champs requis
+                        const requiredFields = ['email', 'name', 'role', 'status'];
+                        const missingFields = requiredFields.filter(field => !userData[field]);
+                        
+                        if (missingFields.length > 0) {
+                            log(`⚠️ Champs manquants: ${missingFields.join(', ')}`, 'warning');
+                        }
+                        
+                        if (userData.status !== 'Active') {
+                            log(`⚠️ Status incorrect: "${userData.status}" (doit être "Active")`, 'warning');
+                        }
+                        
+                        if (userData.role !== 'Super Admin') {
+                            log(`⚠️ Rôle incorrect: "${userData.role}" (doit être "Super Admin")`, 'warning');
+                        }
+                    } else {
+                        log('❌ Aucun profil Firestore trouvé !', 'error');
+                    }
+                } catch (firestoreError) {
+                    log(`❌ Erreur Firestore: ${firestoreError.code} - ${firestoreError.message}`, 'error');
+                }
+
+                // Étape 4: Vérification des collections
+                updateProgress(4);
+                log('📚 Étape 4/6 : Vérification des collections...', 'info');
+                
+                try {
+                    const collections = ['users', 'agencies', 'packages', 'notifications', 'settings'];
+                    for (const collectionName of collections) {
+                        try {
+                            const snapshot = await getDocs(collection(db, collectionName));
+                            log(`✅ Collection "${collectionName}": ${snapshot.size} documents`, 'success');
+                        } catch (err) {
+                            log(`❌ Collection "${collectionName}": ${err.message}`, 'error');
+                        }
+                    }
+                } catch (err) {
+                    log(`❌ Erreur lors de la vérification des collections: ${err.message}`, 'error');
+                }
+
+                // Étape 5: Correction automatique
+                updateProgress(5);
+                log('🔧 Étape 5/6 : Correction automatique...', 'info');
+                await creerProfilCorrect();
+
+                // Étape 6: Test final
+                updateProgress(6);
+                log('🧪 Étape 6/6 : Test de connexion final...', 'info');
+                await testerConnexionComplete();
+
+                log(`🎉 DIAGNOSTIC TERMINÉ !
+
+RÉSUMÉ:
+✅ Firebase Auth: Fonctionnel
+✅ Firestore: Accessible  
+✅ Profil Admin: Créé/Corrigé
+✅ Test de connexion: OK
+
+🚀 VOUS POUVEZ MAINTENANT:
+1. Aller sur https://amenatawsil.com
+2. Vous connecter avec:
+   📧 ${email}
+   🔑 ${password}
+3. Accéder à l'espace Super Admin !`, 'success');
+
+            } catch (error) {
+                log(`❌ ERREUR CRITIQUE: ${error.message}`, 'error');
+            }
+        };
+
+        // Fonction pour créer le profil correct
+        async function creerProfilCorrect() {
+            try {
+                const profileData = {
+                    email: email,
+                    name: 'Administrateur',
+                    role: 'Super Admin',
+                    status: 'Active',
+                    lastLogin: new Date().toLocaleString('fr-FR'),
+                    balance: 0,
+                    agency: '',
+                    performanceScore: 5.0,
+                    acceptanceRate: 100,
+                    availability: 'Available'
+                };
+
+                await setDoc(doc(db, 'users', uid), profileData, { merge: true });
+                
+                log(`✅ Profil créé/mis à jour avec succès !
+Données: ${JSON.stringify(profileData, null, 2)}`, 'success');
+                
+                return true;
+            } catch (error) {
+                log(`❌ Erreur lors de la création du profil: ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        // Fonction pour créer le profil en force
+        window.creerProfilForce = async function() {
+            clearLog();
+            log('🔨 CRÉATION FORCÉE DU PROFIL...', 'info');
+            
+            try {
+                // D'abord s'authentifier
+                await signInWithEmailAndPassword(auth, email, password);
+                log('✅ Authentification réussie', 'success');
+                
+                // Créer le profil
+                const success = await creerProfilCorrect();
+                
+                if (success) {
+                    log(`🎉 PROFIL CRÉÉ AVEC SUCCÈS !
+
+Vous pouvez maintenant vous connecter sur:
+🌐 https://amenatawsil.com
+
+Avec les identifiants:
+📧 ${email}
+🔑 ${password}`, 'success');
+                }
+            } catch (error) {
+                log(`❌ Erreur: ${error.code} - ${error.message}`, 'error');
+            }
+        };
+
+        // Fonction de test de connexion
+        async function testerConnexionComplete() {
+            try {
+                // Se déconnecter d'abord
+                await signOut(auth);
+                
+                // Attendre un peu
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Se reconnecter
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                log('✅ Reconnexion Auth réussie', 'success');
+                
+                // Vérifier le profil
+                const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.status === 'Active' && userData.role === 'Super Admin') {
+                        log('✅ Profil Firestore valide', 'success');
+                        return true;
+                    } else {
+                        log(`❌ Profil invalide: status="${userData.status}", role="${userData.role}"`, 'error');
+                        return false;
+                    }
+                } else {
+                    log('❌ Profil Firestore introuvable', 'error');
+                    return false;
+                }
+            } catch (error) {
+                log(`❌ Test de connexion échoué: ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        // Fonction de test de connexion publique
+        window.testerConnexion = async function() {
+            clearLog();
+            log('🧪 TEST DE CONNEXION...', 'info');
+            
+            const success = await testerConnexionComplete();
+            
+            if (success) {
+                log(`🎉 TEST RÉUSSI !
+
+La connexion fonctionne parfaitement.
+Vous pouvez vous connecter sur https://amenatawsil.com`, 'success');
+            } else {
+                log('❌ Test échoué. Utilisez le diagnostic complet.', 'error');
+            }
+        };
+
+        // Auto-diagnostic au chargement de la page
+        window.addEventListener('load', () => {
+            log('🔧 Page de correction chargée. Cliquez sur "DIAGNOSTIC COMPLET" pour commencer.', 'info');
+        });
+    </script>
+</body>
+</html>

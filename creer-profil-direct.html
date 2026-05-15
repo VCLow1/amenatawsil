@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer Profil Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .result { margin: 10px 0; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button { background: #007bff; color: white; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 10px 0; }
+        button:hover { background: #0056b3; }
+        .credentials { background: #e7f3ff; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Créer le Profil Admin</h1>
+        
+        <div class="credentials">
+            <strong>Identifiants :</strong><br>
+            📧 Email: administrateur@amenatawsil.com<br>
+            🔑 Password: Amena2026!<br>
+            🆔 UID: tzo4E2tr6dQA3skcv8kO3Bek2K93
+        </div>
+
+        <button onclick="creerProfil()" style="width: 100%; font-size: 18px;">
+            🚀 CRÉER LE PROFIL ADMIN MAINTENANT
+        </button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9iQIr23KSYZgsTqymaHe0bXqFdZeId3Q",
+            authDomain: "gen-lang-client-0208289492.firebaseapp.com",
+            projectId: "gen-lang-client-0208289492",
+            storageBucket: "gen-lang-client-0208289492.firebasestorage.app",
+            messagingSenderId: "616128322905",
+            appId: "1:616128322905:web:0c796ed0e1110a41bb8048"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const email = 'administrateur@amenatawsil.com';
+        const password = 'Amena2026!';
+        const uid = 'tzo4E2tr6dQA3skcv8kO3Bek2K93';
+
+        function log(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML += `<div class="result ${type}">${message}</div>`;
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+        }
+
+        window.creerProfil = async function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            
+            log('🔐 Étape 1/4 : Authentification...', 'info');
+            
+            try {
+                // Étape 1: Authentification
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                log(`✅ Authentification réussie !
+UID reçu: ${user.uid}
+UID attendu: ${uid}
+Match: ${user.uid === uid ? '✅' : '❌'}`, 'success');
+
+                if (user.uid !== uid) {
+                    log('❌ PROBLÈME: L\'UID ne correspond pas à celui attendu !', 'error');
+                    return;
+                }
+
+                // Étape 2: Vérification du profil existant
+                log('🔍 Étape 2/4 : Vérification du profil existant...', 'info');
+                
+                const existingDoc = await getDoc(doc(db, 'users', user.uid));
+                if (existingDoc.exists()) {
+                    log(`📋 Profil existant trouvé:
+${JSON.stringify(existingDoc.data(), null, 2)}`, 'info');
+                } else {
+                    log('📋 Aucun profil existant trouvé', 'info');
+                }
+
+                // Étape 3: Création/Mise à jour du profil
+                log('📝 Étape 3/4 : Création du profil Firestore...', 'info');
+                
+                const profileData = {
+                    email: email,
+                    name: 'Administrateur',
+                    role: 'Super Admin',
+                    status: 'Active',
+                    lastLogin: new Date().toLocaleString('fr-FR'),
+                    balance: 0,
+                    agency: '',
+                    performanceScore: 5.0,
+                    acceptanceRate: 100,
+                    availability: 'Available'
+                };
+
+                await setDoc(doc(db, 'users', user.uid), profileData, { merge: true });
+                
+                log(`✅ Profil créé/mis à jour avec succès !
+Données: ${JSON.stringify(profileData, null, 2)}`, 'success');
+
+                // Étape 4: Test de connexion complet
+                log('🧪 Étape 4/4 : Test de connexion complet...', 'info');
+                
+                // Se déconnecter et se reconnecter pour tester
+                await signOut(auth);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const testCredential = await signInWithEmailAndPassword(auth, email, password);
+                const testDoc = await getDoc(doc(db, 'users', testCredential.user.uid));
+                
+                if (testDoc.exists()) {
+                    const testData = testDoc.data();
+                    if (testData.status === 'Active' && testData.role === 'Super Admin') {
+                        log('✅ Test de connexion réussi !', 'success');
+                    } else {
+                        log(`⚠️ Profil trouvé mais données incorrectes:
+Status: ${testData.status} (doit être "Active")
+Role: ${testData.role} (doit être "Super Admin")`, 'warning');
+                    }
+                } else {
+                    log('❌ Profil non trouvé lors du test', 'error');
+                }
+                
+                log(`🎉 SUCCÈS COMPLET !
+
+Le profil admin a été créé avec succès !
+
+VOS IDENTIFIANTS :
+🌐 URL      : https://amenatawsil.com
+📧 Email    : ${email}
+🔑 Password : ${password}
+
+✅ Vous pouvez maintenant fermer cette page
+✅ Aller sur https://amenatawsil.com
+✅ Vous connecter avec ces identifiants
+✅ Accéder à l'espace Super Admin !
+
+🔧 Si la connexion échoue encore, utilisez fix-admin-final.html`, 'success');
+
+            } catch (error) {
+                log(`❌ ERREUR !
+
+Code: ${error.code}
+Message: ${error.message}
+
+${error.code === 'auth/invalid-credential' ? 
+    '💡 Le mot de passe est incorrect.' : 
+    error.code === 'permission-denied' ?
+    '💡 Problème de permissions Firestore.' :
+    error.code === 'unavailable' ?
+    '💡 Firestore n\'est pas accessible. Vérifiez votre connexion.' :
+    error.code === 'auth/user-not-found' ?
+    '💡 Utilisateur non trouvé dans Firebase Auth.' :
+    '💡 Erreur inconnue.'
+}
+
+SOLUTIONS :
+1. Utilisez fix-admin-final.html pour un diagnostic complet
+2. Vérifiez que Firestore est activé dans Firebase Console
+3. Création manuelle dans Firestore Console:
+   - Collection: users
+   - Document ID: ${uid}
+   - Ajoutez tous les champs requis`, 'error');
+            }
+        };
+    </script>
+</body>
+</html>

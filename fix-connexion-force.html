@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Correction Forcée Admin</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 700px; 
+            margin: 20px auto; 
+            padding: 20px; 
+            background: #f0f2f5;
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        .result { 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-family: monospace; 
+            white-space: pre-wrap; 
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        
+        button { 
+            background: #dc3545; 
+            color: white; 
+            border: none; 
+            padding: 15px 25px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            margin: 10px 5px; 
+            width: 100%;
+        }
+        button:hover { background: #c82333; }
+        
+        .credentials { 
+            background: #e7f3ff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            text-align: center;
+            border: 2px solid #007bff;
+        }
+        
+        h1 { color: #dc3545; text-align: center; }
+        .step { background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 CORRECTION FORCÉE ADMIN</h1>
+        
+        <div class="credentials">
+            <h2>🔑 IDENTIFIANTS FINAUX</h2>
+            <strong>📧 Email:</strong> administrateur@amenatawsil.com<br>
+            <strong>🔑 Password:</strong> Amena2026!<br>
+            <strong>🌐 Site:</strong> <a href="https://amenatawsil.com" target="_blank">https://amenatawsil.com</a>
+        </div>
+
+        <button onclick="correctionComplete()" style="font-size: 18px;">
+            🚀 CORRECTION COMPLÈTE ET FORCÉE
+        </button>
+        
+        <div id="result"></div>
+        
+        <div style="margin-top: 30px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+            <h3>📋 Instructions après correction :</h3>
+            <div class="step">1️⃣ Attendre que la correction se termine</div>
+            <div class="step">2️⃣ Aller sur https://amenatawsil.com</div>
+            <div class="step">3️⃣ Utiliser les identifiants ci-dessus</div>
+            <div class="step">4️⃣ Accéder au dashboard Super Admin</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signOut,
+            createUserWithEmailAndPassword,
+            updatePassword
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            deleteDoc,
+            enableNetwork,
+            connectFirestoreEmulator
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9iQIr23KSYZgsTqymaHe0bXqFdZeId3Q",
+            authDomain: "gen-lang-client-0208289492.firebaseapp.com",
+            projectId: "gen-lang-client-0208289492",
+            storageBucket: "gen-lang-client-0208289492.firebasestorage.app",
+            messagingSenderId: "616128322905",
+            appId: "1:616128322905:web:0c796ed0e1110a41bb8048"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const email = 'administrateur@amenatawsil.com';
+        const password = 'Amena2026!';
+
+        function log(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            const timestamp = new Date().toLocaleTimeString();
+            resultDiv.innerHTML += `<div class="result ${type}">[${timestamp}] ${message}</div>`;
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('result').innerHTML = '';
+        }
+
+        window.correctionComplete = async function() {
+            clearLog();
+            log('🔧 DÉBUT DE LA CORRECTION FORCÉE', 'warning');
+            
+            try {
+                // Étape 1: Forcer la connectivité
+                log('📡 Étape 1/8 : Activation de la connectivité...', 'info');
+                await enableNetwork(db);
+                log('✅ Connectivité activée', 'success');
+
+                // Étape 2: Tentative de connexion
+                log('🔐 Étape 2/8 : Test de connexion existante...', 'info');
+                let userCredential;
+                let userUid;
+                
+                try {
+                    userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    userUid = userCredential.user.uid;
+                    log(`✅ Connexion réussie avec UID: ${userUid}`, 'success');
+                } catch (authError) {
+                    log(`⚠️ Connexion échouée: ${authError.code}`, 'warning');
+                    
+                    // Si l'utilisateur n'existe pas, on le crée
+                    if (authError.code === 'auth/user-not-found' || authError.code === 'auth/invalid-credential') {
+                        log('🔨 Création d\'un nouvel utilisateur...', 'info');
+                        try {
+                            userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                            userUid = userCredential.user.uid;
+                            log(`✅ Utilisateur créé avec UID: ${userUid}`, 'success');
+                        } catch (createError) {
+                            log(`❌ Impossible de créer l'utilisateur: ${createError.code}`, 'error');
+                            return;
+                        }
+                    } else {
+                        log(`❌ Erreur d'authentification: ${authError.message}`, 'error');
+                        return;
+                    }
+                }
+
+                // Étape 3: Suppression de l'ancien profil (si existe)
+                log('🗑️ Étape 3/8 : Nettoyage de l\'ancien profil...', 'info');
+                try {
+                    const oldDoc = await getDoc(doc(db, 'users', userUid));
+                    if (oldDoc.exists()) {
+                        await deleteDoc(doc(db, 'users', userUid));
+                        log('✅ Ancien profil supprimé', 'success');
+                    } else {
+                        log('ℹ️ Aucun ancien profil trouvé', 'info');
+                    }
+                } catch (deleteError) {
+                    log(`⚠️ Erreur lors de la suppression: ${deleteError.message}`, 'warning');
+                }
+
+                // Étape 4: Attente pour la propagation
+                log('⏳ Étape 4/8 : Attente de propagation...', 'info');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Étape 5: Création du nouveau profil
+                log('📝 Étape 5/8 : Création du nouveau profil...', 'info');
+                
+                const profileData = {
+                    email: email,
+                    name: 'Administrateur',
+                    role: 'Super Admin',
+                    status: 'Active',
+                    lastLogin: new Date().toLocaleString('fr-FR'),
+                    balance: 0,
+                    agency: '',
+                    performanceScore: 5.0,
+                    acceptanceRate: 100,
+                    availability: 'Available',
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                await setDoc(doc(db, 'users', userUid), profileData);
+                log(`✅ Nouveau profil créé !
+UID: ${userUid}
+Données: ${JSON.stringify(profileData, null, 2)}`, 'success');
+
+                // Étape 6: Vérification immédiate
+                log('🔍 Étape 6/8 : Vérification immédiate...', 'info');
+                const verifyDoc = await getDoc(doc(db, 'users', userUid));
+                if (verifyDoc.exists()) {
+                    const verifyData = verifyDoc.data();
+                    log(`✅ Profil vérifié !
+Status: ${verifyData.status}
+Role: ${verifyData.role}`, 'success');
+                } else {
+                    log('❌ Profil non trouvé lors de la vérification', 'error');
+                    return;
+                }
+
+                // Étape 7: Test de déconnexion/reconnexion
+                log('🔄 Étape 7/8 : Test de reconnexion...', 'info');
+                await signOut(auth);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const testCredential = await signInWithEmailAndPassword(auth, email, password);
+                const testDoc = await getDoc(doc(db, 'users', testCredential.user.uid));
+                
+                if (testDoc.exists()) {
+                    const testData = testDoc.data();
+                    if (testData.status === 'Active' && testData.role === 'Super Admin') {
+                        log('✅ Test de reconnexion réussi !', 'success');
+                    } else {
+                        log(`❌ Données incorrectes: status=${testData.status}, role=${testData.role}`, 'error');
+                        return;
+                    }
+                } else {
+                    log('❌ Profil non trouvé lors du test', 'error');
+                    return;
+                }
+
+                // Étape 8: Finalisation
+                log('🎯 Étape 8/8 : Finalisation...', 'info');
+                await signOut(auth); // Se déconnecter pour permettre la connexion sur le site
+
+                log(`🎉 CORRECTION TERMINÉE AVEC SUCCÈS !
+
+╔══════════════════════════════════════════════════════════════╗
+║                    CONNEXION ADMIN PRÊTE                     ║
+╠══════════════════════════════════════════════════════════════╣
+║ 🌐 URL      : https://amenatawsil.com                       ║
+║ 📧 Email    : ${email}                    ║
+║ 🔑 Password : ${password}                              ║
+║ 🆔 UID      : ${userUid}                                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ ÉTAPES SUIVANTES :
+1. Fermez cette page
+2. Allez sur https://amenatawsil.com
+3. Connectez-vous avec les identifiants ci-dessus
+4. Vous devriez accéder au dashboard Super Admin
+
+🔧 Le profil a été créé avec tous les champs requis.
+🔧 L'authentification a été testée et fonctionne.
+🔧 Vous pouvez maintenant utiliser votre plateforme !`, 'success');
+
+            } catch (error) {
+                log(`❌ ERREUR CRITIQUE LORS DE LA CORRECTION :
+
+Code: ${error.code || 'UNKNOWN'}
+Message: ${error.message}
+
+🛠️ SOLUTIONS ALTERNATIVES :
+1. Vérifiez votre connexion internet
+2. Réessayez dans quelques minutes
+3. Contactez le support Firebase si le problème persiste
+
+📞 Si rien ne fonctionne, créez manuellement dans Firestore Console :
+- Collection: users
+- Document ID: ${userUid || 'tzo4E2tr6dQA3skcv8kO3Bek2K93'}
+- Champs: email, name, role, status, etc.`, 'error');
+            }
+        };
+
+        // Message d'accueil
+        window.addEventListener('load', () => {
+            log('🔧 Correction forcée prête. Cliquez sur le bouton pour commencer.', 'info');
+        });
+    </script>
+</body>
+</html>

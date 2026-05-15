@@ -1,0 +1,70 @@
+═══════════════════════════════════════════════════════════════════════
+                    ✅ PROFIL CRÉÉ - IDENTIFIANTS
+═══════════════════════════════════════════════════════════════════════
+
+Selon votre capture d'écran Firestore, voici vos identifiants :
+
+🌐 URL      : https://amenatawsil.com
+📧 Email    : admin@amenatawsil.com
+🔑 Password : (celui que vous avez défini dans Firebase Authentication)
+
+═══════════════════════════════════════════════════════════════════════
+                    🔍 VÉRIFICATION
+═══════════════════════════════════════════════════════════════════════
+
+Dans Firestore, je vois :
+✅ Collection : users
+✅ Document ID : tzo4E2tr6dQA3skcv8kO3Bek2K93
+✅ email : admin@amenatawsil.com
+✅ name : Admin
+✅ role : Super Admin
+✅ status : Active
+✅ lastLogin : 2026-05-15
+
+═══════════════════════════════════════════════════════════════════════
+                    🔐 ESSAYEZ DE VOUS CONNECTER
+═══════════════════════════════════════════════════════════════════════
+
+1. Allez sur : https://amenatawsil.com
+
+2. Essayez avec :
+   📧 Email    : admin@amenatawsil.com
+   🔑 Password : Admin2026!
+
+   OU
+
+   📧 Email    : admin@amenatawsil.com
+   🔑 Password : (le mot de passe que vous avez défini)
+
+3. Si ça ne fonctionne pas, essayez aussi :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ SI ÇA NE FONCTIONNE PAS
+═══════════════════════════════════════════════════════════════════════
+
+Vérifiez que l'email dans Firestore correspond EXACTEMENT à l'email
+dans Firebase Authentication :
+
+1. Allez sur Authentication :
+   👉 https://console.firebase.google.com/project/gen-lang-client-0208289492/authentication/users
+
+2. Trouvez l'utilisateur et notez son email exact
+
+3. Vérifiez que l'UID correspond au document dans Firestore
+
+4. Utilisez cet email pour vous connecter
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 LISTE DES UTILISATEURS CRÉÉS
+═══════════════════════════════════════════════════════════════════════
+
+Nous avons créé plusieurs utilisateurs. Voici les emails possibles :
+
+1. admin@amenatawsil.com (existe déjà, mot de passe inconnu)
+2. administrateur@amenatawsil.com (créé avec : Amena2026!)
+
+Essayez les deux !
+
+═══════════════════════════════════════════════════════════════════════

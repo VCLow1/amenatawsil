@@ -1,0 +1,84 @@
+═══════════════════════════════════════════════════════════════════════
+                    🎯 ÉTAPES FINALES (2 MINUTES)
+═══════════════════════════════════════════════════════════════════════
+
+ÉTAPE 1 : Ouvrir Firestore
+───────────────────────────────────────────────────────────────────────
+
+Vous êtes déjà sur la page Firestore.
+Cliquez sur "users" dans la liste à gauche.
+
+
+ÉTAPE 2 : Ajouter le document admin
+───────────────────────────────────────────────────────────────────────
+
+1. Cliquez sur "+ Ajouter un document" (en haut)
+
+2. ID du document : tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+3. Copiez-collez ces champs UN PAR UN :
+
+   ┌──────────┬────────┬──────────────────────────────────┐
+   │ Champ    │ Type   │ Valeur                           │
+   ├──────────┼────────┼──────────────────────────────────┤
+   │ email    │ string │ administrateur@amenatawsil.com   │
+   │ name     │ string │ Administrateur                   │
+   │ role     │ string │ Super Admin                      │
+   │ status   │ string │ Active                           │
+   │ lastLogin│ string │ 2026-05-15                       │
+   │ balance  │ number │ 0                                │
+   │ agency   │ string │                                  │
+   └──────────┴────────┴──────────────────────────────────┘
+
+   IMPORTANT : 
+   - "balance" est de type NUMBER (pas string)
+   - "agency" est vide (string vide)
+
+4. Cliquez sur "Enregistrer"
+
+
+ÉTAPE 3 : Se connecter
+───────────────────────────────────────────────────────────────────────
+
+1. Allez sur : https://amenatawsil.com
+
+2. Entrez :
+   📧 Email    : administrateur@amenatawsil.com
+   🔑 Password : Amena2026!
+
+3. Cliquez sur "Se connecter à l'espace"
+
+4. ✅ Vous êtes connecté en tant que Super Admin !
+
+
+═══════════════════════════════════════════════════════════════════════
+                    ⚠️ SI ÇA NE FONCTIONNE TOUJOURS PAS
+═══════════════════════════════════════════════════════════════════════
+
+1. Vérifiez que l'ID du document est EXACTEMENT :
+   tzo4E2tr6dQA3skcv8kO3Bek2K93
+
+2. Vérifiez que le champ "email" est EXACTEMENT :
+   administrateur@amenatawsil.com
+
+3. Vérifiez que le champ "role" est EXACTEMENT :
+   Super Admin
+   (avec majuscules et espace)
+
+4. Vérifiez que le champ "status" est EXACTEMENT :
+   Active
+   (avec majuscule)
+
+5. Rechargez la page https://amenatawsil.com
+   (Ctrl + F5 pour vider le cache)
+
+
+═══════════════════════════════════════════════════════════════════════
+                    📋 VOS IDENTIFIANTS
+═══════════════════════════════════════════════════════════════════════
+
+🌐 URL      : https://amenatawsil.com
+📧 Email    : administrateur@amenatawsil.com
+🔑 Password : Amena2026!
+
+═══════════════════════════════════════════════════════════════════════
