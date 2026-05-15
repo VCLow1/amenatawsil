@@ -18,9 +18,20 @@ import { ApprovalManagement } from './components/ApprovalManagement';
 import { Settings } from './components/Settings';
 import { Login } from './components/Login';
 import { PackageScan } from './components/PackageScan';
+import { ConfigError } from './components/ConfigError';
 import { motion, AnimatePresence } from 'motion/react';
 import { DataProvider, useData } from './context/DataContext';
 import { Menu } from 'lucide-react';
+
+// Vérification de la configuration Firebase
+const isFirebaseConfigured = () => {
+  const requiredVars = [
+    'VITE_FIREBASE_API_KEY',
+    'VITE_FIREBASE_AUTH_DOMAIN',
+    'VITE_FIREBASE_PROJECT_ID',
+  ];
+  return requiredVars.every(varName => import.meta.env[varName]);
+};
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -129,6 +140,11 @@ const AppContent = () => {
 };
 
 export default function App() {
+  // Vérifier si Firebase est configuré
+  if (!isFirebaseConfigured()) {
+    return <ConfigError />;
+  }
+
   return (
     <DataProvider>
       <Router>

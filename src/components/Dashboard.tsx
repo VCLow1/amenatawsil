@@ -13,6 +13,29 @@ import {
 import { useData } from '../context/DataContext';
 import { filterPackagesForAgency } from '../lib/packageUtils';
 
+// Vérification des variables d'environnement au chargement
+const checkFirebaseConfig = () => {
+  const requiredVars = [
+    'VITE_FIREBASE_API_KEY',
+    'VITE_FIREBASE_AUTH_DOMAIN',
+    'VITE_FIREBASE_PROJECT_ID',
+  ];
+  
+  const missing = requiredVars.filter(varName => !import.meta.env[varName]);
+  
+  if (missing.length > 0) {
+    console.error('❌ Variables d\'environnement Firebase manquantes:', missing);
+    console.error('📝 Configurez ces variables sur votre plateforme de déploiement');
+    return false;
+  }
+  return true;
+};
+
+// Vérifier au chargement du module
+if (!checkFirebaseConfig()) {
+  console.warn('⚠️ Firebase n\'est pas correctement configuré');
+}
+
 export const Dashboard = () => {
   const { packages, currentUser, agencies, settings, users } = useData();
   const [reportPeriod, setReportPeriod] = useState('month');
