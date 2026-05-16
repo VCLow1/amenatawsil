@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "Courier": {
+      "title": "Courier",
+      "description": "Information about a delivery courier",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "cin": { "type": "string" },
+        "phone": { "type": "string" },
+        "vehicleType": { "type": "string", "enum": ["Moto", "Voiture", "Vélo"] },
+        "zone": { "type": "string" },
+        "photo": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Active", "Suspended"] },
+        "performanceScore": { "type": "number" },
+        "acceptanceRate": { "type": "number" },
+        "balance": { "type": "number" },
+        "email": { "type": "string" },
+        "uid": { "type": "string" }
+      },
+      "required": ["name", "phone", "email", "uid", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Delivery order details",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "pickupAddress": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "distance": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "platformCommission": { "type": "number" },
+        "netEarnings": { "type": "number" },
+        "status": { "type": "string", "enum": ["Available", "Assigned", "En route to pickup", "Picked up", "In Delivery", "Delivered", "Cancelled"] },
+        "courierId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "assignedAt": { "type": "string", "format": "date-time" },
+        "pickedUpAt": { "type": "string", "format": "date-time" },
+        "deliveredAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerName", "pickupAddress", "deliveryAddress", "shippingFee", "status", "createdAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction for a courier",
+      "type": "object",
+      "properties": {
+        "courierId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["Earning", "Withdrawal"] },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Pending", "Completed", "Failed"] },
+        "orderId": { "type": "string" }
+      },
+      "required": ["courierId", "amount", "type", "date", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System notification for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "read": { "type": "boolean" },
+        "type": { "type": "string", "enum": ["success", "warning", "error", "info"] }
+      },
+      "required": ["userId", "title", "message", "date", "read", "type"]
+    }
+  },
+  "firestore": {
+    "/couriers/{courierId}": {
+      "schema": "Courier",
+      "description": "Courier profiles"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Delivery orders"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial history"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    }
+  }
+}

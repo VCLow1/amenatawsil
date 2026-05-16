@@ -1,0 +1,157 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────────────
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function getMyData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function getRole() {
+      return getMyData().role;
+    }
+
+    function getAgency() {
+      return getMyData().agency;
+    }
+
+    function isSuperAdmin() {
+      return isAuth() && getRole() == 'Super Admin';
+    }
+
+    function isModerator() {
+      return isAuth() && getRole() == 'Agency Moderator';
+    }
+
+    function isAdminOrModerator() {
+      return isSuperAdmin() || isModerator();
+    }
+
+    function isCourier() {
+      return isAuth() && getRole() == 'Courier';
+    }
+
+    function isShipper() {
+      return isAuth() && getRole() == 'Shipper';
+    }
+
+    // ── Users ─────────────────────────────────────────────────────────
+    match /users/{userId} {
+      allow read: if isAuth();
+
+      // Création d'un compte utilisateur
+      allow create: if isAuth() && (
+        // Inscription propre (son propre UID)
+        request.auth.uid == userId
+        // Super Admin peut créer n'importe quel rôle
+        || isSuperAdmin()
+        // Modérateur peut créer Shipper ou Courier uniquement, dans son agence
+        || (
+          isModerator()
+          && request.resource.data.role in ['Shipper', 'Courier']
+          && (
+            request.resource.data.agency == getAgency()
+            || request.resource.data.pendingAgency == getAgency()
+          )
+        )
+      );
+
+      // Mise à jour d'un compte
+      allow update: if isAuth() && (
+        // Super Admin peut tout modifier
+        isSuperAdmin()
+        // Modérateur peut modifier les users de son agence, SAUF changer le rôle
+        || (
+          isModerator()
+          && (
+            resource.data.agency == getAgency()
+            || resource.data.pendingAgency == getAgency()
+          )
+          // Interdit de changer le rôle
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
+          // Interdit de promouvoir vers Super Admin ou Agency Moderator
+          && !(request.resource.data.role in ['Super Admin', 'Agency Moderator'])
+        )
+        // Un user peut modifier uniquement ses propres champs non-sensibles
+        || (
+          request.auth.uid == userId
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'status', 'agency'])
+        )
+        // Livreur peut mettre à jour son propre balance et availability (après livraison)
+        || (
+          isCourier()
+          && request.auth.uid == userId
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['balance', 'availability'])
+        )
+      );
+
+      // Suppression : Super Admin ou Modérateur (users de son agence uniquement)
+      allow delete: if isSuperAdmin()
+        || (
+          isModerator()
+          && (
+            resource.data.agency == getAgency()
+            || resource.data.pendingAgency == getAgency()
+          )
+          // Le modérateur ne peut pas supprimer d'autres modérateurs ou admins
+          && !(resource.data.role in ['Super Admin', 'Agency Moderator'])
+        );
+    }
+
+    // ── Agencies ──────────────────────────────────────────────────────
+    match /agencies/{agencyId} {
+      allow read: if isAuth();
+      allow create: if isSuperAdmin();
+      allow update: if isSuperAdmin()
+        // Modérateur peut mettre à jour uniquement son agence (ex: stats)
+        || (isModerator() && resource.data.name == getAgency());
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Packages ──────────────────────────────────────────────────────
+    match /packages/{packageId} {
+      // Lecture publique autorisée pour le scan QR (sans connexion)
+      allow read: if true;
+
+      allow create: if isAdminOrModerator() || isShipper();
+
+      allow update: if isAdminOrModerator()
+        || isShipper()
+        || (isCourier() && resource.data.courierId == request.auth.uid);
+
+      // Personne ne peut supprimer un colis (intégrité des données)
+      allow delete: if false;
+    }
+
+    // ── Transactions ──────────────────────────────────────────────────
+    match /transactions/{txId} {
+      allow read: if isAuth();
+      // Admin/Modérateur ou Courier (pour ses propres earnings à la livraison)
+      allow create: if isAdminOrModerator()
+        || (isCourier() && request.resource.data.courierId == request.auth.uid);
+      allow update: if isSuperAdmin();
+      allow delete: if false;
+    }
+
+    // ── Notifications ─────────────────────────────────────────────────
+    match /notifications/{notifId} {
+      allow read: if isAuth();
+      // Seuls les admins et modérateurs peuvent créer des notifications
+      allow create: if isAdminOrModerator();
+      // Tout utilisateur connecté peut marquer une notification comme lue
+      allow update: if isAuth()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Settings ──────────────────────────────────────────────────────
+    match /settings/{docId} {
+      allow read: if isAuth();
+      allow write: if isSuperAdmin();
+    }
+  }
+}
